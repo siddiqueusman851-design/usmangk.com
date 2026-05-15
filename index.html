@@ -12,8 +12,7 @@
         body { background: #f4f7f9; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
 
         /* --- LOGO SECTION --- */
-        .logo-container { margin-bottom: 35px; text-align: center; cursor: pointer; transition: transform 0.3s ease; }
-        .logo-container:hover { transform: scale(1.05); }
+        .logo-container { margin-bottom: 35px; text-align: center; cursor: pointer; transition: 0.3s; }
         .logo-box { display: flex; align-items: center; justify-content: center; gap: 12px; }
         .logo-icon { 
             width: 60px; height: 60px; background: #1a3a5f; border-radius: 15px; 
@@ -41,7 +40,7 @@
         .btn-main { background: #1a3a5f; color: white; }
         .btn-multi { background: #27ae60; color: white; }
         .btn-reset { background: #e74c3c; color: white; }
-        button:hover { transform: translateY(-3px); opacity: 0.9; }
+        button:hover { transform: translateY(-3px); }
 
         /* --- GRID SYSTEM --- */
         #results-container { 
@@ -53,34 +52,36 @@
         .result-card { 
             background: white; border-radius: 22px; overflow: hidden; 
             box-shadow: 0 12px 30px rgba(0,0,0,0.04); border: 1px solid #eee;
-            display: flex; flex-direction: column; height: 520px; /* Fixed Total Height */
+            display: flex; flex-direction: column; height: 500px;
         }
 
-        /* --- IMAGE BOX FIX --- */
+        /* --- IMAGE BOX FIXED --- */
         .img-frame { 
             width: 100%; 
-            height: 220px; /* Fixed frame height */
-            background: #222; /* Dark background for empty spaces */
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            overflow: hidden; 
+            height: 230px; 
+            background: #eee;
+            position: relative;
+            overflow: hidden;
             border-bottom: 1px solid #f0f0f0;
         }
         .img-frame img { 
-            max-width: 100%; 
-            max-height: 100%; 
-            object-fit: contain; /* Is se photo kabhi lambi/stretch nahi hogi */
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            object-position: top center; /* MrBeast ke chehre par focus karega */
             display: block;
         }
-        .img-frame i { font-size: 50px; color: #dfe4ea; }
+        .img-frame i { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 40px; color: #ccc; 
+        }
 
-        .content-frame { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; overflow: hidden; }
-        .content-frame h3 { color: #1a3a5f; font-size: 20px; margin-bottom: 10px; font-weight: 600; }
+        .content-frame { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; overflow: hidden; }
+        .content-frame h3 { color: #1a3a5f; font-size: 19px; margin-bottom: 8px; font-weight: 600; text-transform: capitalize; }
         
         .text-scroll { 
-            font-size: 14.5px; color: #555; line-height: 1.6; 
-            overflow-y: auto; flex-grow: 1; padding-right: 8px;
+            font-size: 14px; color: #555; line-height: 1.6; 
+            overflow-y: auto; flex-grow: 1; padding-right: 5px;
         }
         .text-scroll::-webkit-scrollbar { width: 5px; }
         .text-scroll::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
@@ -98,10 +99,10 @@
     <div class="search-wrapper">
         <input type="text" id="userInput" class="search-bar" placeholder="Ask usman.gk...">
         <div class="btn-flex">
-            <button class="btn-main" onclick="handleSearch(1)"><i class="fa-solid fa-magnifying-glass"></i> Single Result</button>
+            <button class="btn-main" onclick="handleSearch(1)">Search Result</button>
             <button class="btn-multi" onclick="handleSearch(2)">2 Tabs</button>
             <button class="btn-multi" onclick="handleSearch(4)">4 Tabs</button>
-            <button class="btn-reset" onclick="document.getElementById('results-container').innerHTML=''"><i class="fa-solid fa-trash-can"></i> Reset</button>
+            <button class="btn-reset" onclick="document.getElementById('results-container').innerHTML=''"><i class="fa-solid fa-rotate"></i> Clear</button>
         </div>
     </div>
 
@@ -120,7 +121,7 @@
                         <div class="img-frame" id="img-${uniqueId}"><i class="fa-solid fa-spinner fa-spin"></i></div>
                         <div class="content-frame">
                             <h3>${query}</h3>
-                            <div class="text-scroll" id="txt-${uniqueId}">Ask usman.gk is finding data...</div>
+                            <div class="text-scroll" id="txt-${uniqueId}">Consulting database...</div>
                         </div>
                     </div>
                 `;
@@ -137,17 +138,18 @@
                 const imgDiv = document.getElementById(`img-${id}`);
                 const textDiv = document.getElementById(`txt-${id}`);
 
-                if (data.originalimage) {
+                // Image Selection Logic
+                if (data.originalimage && data.originalimage.source) {
                     imgDiv.innerHTML = `<img src="${data.originalimage.source}" alt="Result">`;
-                } else if (data.thumbnail) {
+                } else if (data.thumbnail && data.thumbnail.source) {
                     imgDiv.innerHTML = `<img src="${data.thumbnail.source}" alt="Result">`;
                 } else {
                     imgDiv.innerHTML = `<i class="fa-solid fa-image-slash"></i>`;
                 }
 
-                textDiv.innerText = data.extract || "No details found.";
+                textDiv.innerText = data.extract || "No detailed information found.";
             } catch (error) {
-                document.getElementById(`txt-${id}`).innerText = "Network error.";
+                document.getElementById(`txt-${id}`).innerText = "Error connecting to service.";
             }
         }
     </script>
