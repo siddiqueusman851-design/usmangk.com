@@ -68,7 +68,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover; 
-            object-position: top center; 
+            object-position: top center; /* MrBeast ke chehre par focus karega */
             display: block;
         }
         .img-frame i { 
@@ -121,7 +121,7 @@
                         <div class="img-frame" id="img-${uniqueId}"><i class="fa-solid fa-spinner fa-spin"></i></div>
                         <div class="content-frame">
                             <h3>${query}</h3>
-                            <div class="text-scroll" id="txt-${uniqueId}">Consulting usman.gk database...</div>
+                            <div class="text-scroll" id="txt-${uniqueId}">Consulting database...</div>
                         </div>
                     </div>
                 `;
@@ -138,6 +138,7 @@
                 const imgDiv = document.getElementById(`img-${id}`);
                 const textDiv = document.getElementById(`txt-${id}`);
 
+                // Image Selection Logic
                 if (data.originalimage && data.originalimage.source) {
                     imgDiv.innerHTML = `<img src="${data.originalimage.source}" alt="Result">`;
                 } else if (data.thumbnail && data.thumbnail.source) {
