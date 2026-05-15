@@ -10,8 +10,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: #f4f7f6; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
 
-        /* Logo Section */
-        .logo-section { display: flex; align-items: center; margin-top: 40px; margin-bottom: 25px; cursor: pointer; }
+        .logo-section { display: flex; align-items: center; margin-top: 30px; margin-bottom: 20px; cursor: pointer; }
         .gear-brain-logo {
             width: 60px; height: 60px; margin-right: 12px;
             background: linear-gradient(135deg, #1a3a5f 50%, #c5a02e 50%);
@@ -22,126 +21,90 @@
         .logo-text-box h1 { font-size: 38px; color: #1a3a5f; font-weight: 900; line-height: 0.8; }
         .logo-text-box span { font-size: 42px; color: #1a3a5f; font-weight: 800; }
 
-        /* Search Area */
         .search-wrapper { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 15px; }
-        .input-box { width: 100%; position: relative; }
-        .main-search {
-            width: 100%; padding: 15px 45px; border: 1px solid #dfe1e5; 
-            border-radius: 30px; font-size: 16px; outline: none; background: white;
-        }
-        .btn-search {
-            padding: 12px; background: #1a3a5f; color: white; border: none; 
-            border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 16px;
-        }
-
-        /* Result Display Area */
-        #result-display {
-            width: 100%; max-width: 650px; margin-top: 20px; padding: 20px;
-            background: white; border-radius: 15px; border: 1px solid #dadce0;
-            display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+        .main-search { width: 100%; padding: 15px 45px; border: 1px solid #dfe1e5; border-radius: 30px; font-size: 16px; outline: none; }
         
-        /* Translate Button Feature */
-        .translate-bar {
-            display: flex; justify-content: flex-end; margin-bottom: 10px;
-        }
-        .btn-translate {
-            background: #f0f2f5; border: 1px solid #ddd; padding: 5px 12px;
-            border-radius: 20px; font-size: 13px; cursor: pointer; color: #1a3a5f; font-weight: bold;
-        }
-        .btn-translate i { margin-right: 5px; }
+        .button-group { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        .btn-main { padding: 12px 25px; background: #1a3a5f; color: white; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; }
+        .btn-multi { padding: 10px 15px; background: #34a853; color: white; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; }
+        .btn-reset { padding: 10px 15px; background: #ea4335; color: white; border: none; border-radius: 20px; font-size: 14px; cursor: pointer; }
 
-        .res-image { width: 100%; max-height: 250px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
-        .res-head { font-size: 22px; color: #1a3a5f; font-weight: bold; margin-bottom: 10px; }
-        .res-body { font-size: 16px; color: #3c4043; line-height: 1.6; }
+        #result-display { width: 100%; max-width: 650px; margin-top: 20px; display: none; }
+        .info-card { padding: 20px; background: white; border-radius: 15px; border: 1px solid #dadce0; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .video-container { width: 100%; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px; background: #000; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-    <div class="logo-section" onclick="location.reload()">
+    <div class="logo-section" onclick="window.location.reload()">
         <div class="gear-brain-logo"><i class="fa-solid fa-brain"></i></div>
         <div class="logo-text-box"><h1>USMAN</h1><span>.GK</span></div>
     </div>
 
     <div class="search-wrapper">
-        <div class="input-box">
-            <i class="fa-solid fa-magnifying-glass" style="position:absolute; left:18px; top:18px; color:#9aa0a6;"></i>
-            <input type="text" id="searchInput" class="main-search" placeholder="Search anything...">
+        <input type="text" id="searchInput" class="main-search" placeholder="Search and open multiple tabs...">
+        
+        <div class="button-group">
+            <button class="btn-main" onclick="executeSearch()">Search Knowledge</button>
+            <button class="btn-multi" onclick="openMultiTabs(3)">Open 3 Google Tabs</button>
+            <button class="btn-multi" onclick="openMultiTabs(5)">Open 5 Google Tabs</button>
+            <button class="btn-reset" onclick="clearAll()"><i class="fa-solid fa-trash"></i> Clear</button>
         </div>
-        <button class="btn-search" onclick="executeSearch()">Search Knowledge</button>
     </div>
 
     <div id="result-display">
-        <div class="translate-bar">
-            <button class="btn-translate" onclick="toggleTranslation()">
-                <i class="fa-solid fa-language"></i> Translate (اردو / English)
-            </button>
+        <div class="info-card">
+            <h2 id="rtitle" style="color: #1a3a5f;"></h2>
+            <p id="rtext" style="margin-top:10px;"></p>
         </div>
-        <img id="res-img" class="res-image" src="" style="display:none;">
-        <div id="rtitle" class="res-head"></div>
-        <div id="rtext" class="res-body"></div>
+        <div class="info-card">
+            <h3 style="margin-bottom:10px; color:red;"><i class="fa-brands fa-youtube"></i> Video Result</h3>
+            <div id="video-box" class="video-container"></div>
+        </div>
     </div>
 
     <script>
-        let currentData = { en: "", ur: "", currentLang: "en" };
+        let currentData = { en: "", ur: "" };
+
+        // Multi-Tab Function
+        function openMultiTabs(count) {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) {
+                alert("Pehle kuch likhein!");
+                return;
+            }
+            
+            alert("Agar tabs na khulein, toh browser ke upar 'Allow Pop-ups' par click karein.");
+            
+            for (let i = 0; i < count; i++) {
+                // Har tab mein thora sa farq rakha hai taake Google block na kare
+                window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}&tab=${i}`, '_blank');
+            }
+        }
+
+        function clearAll() {
+            document.getElementById('searchInput').value = "";
+            document.getElementById('result-display').style.display = "none";
+        }
 
         async function executeSearch() {
             const query = document.getElementById('searchInput').value.trim();
-            const resultBox = document.getElementById('result-display');
             if (!query) return;
-
-            resultBox.style.display = "block";
+            document.getElementById('result-display').style.display = "block";
             document.getElementById('rtitle').innerText = "Searching...";
-            document.getElementById('rtext').innerText = "";
 
             try {
-                // Fetch English version
                 const resEn = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`);
                 const dataEn = await resEn.json();
+                document.getElementById('rtitle').innerText = dataEn.title || "Result";
+                document.getElementById('rtext').innerText = dataEn.extract || "No info found.";
                 
-                // Fetch Urdu version
-                const resUr = await fetch(`https://ur.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`);
-                const dataUr = await resUr.json();
-
-                currentData.en = dataEn.extract || "No English description available.";
-                currentData.ur = dataUr.extract || "اردو میں معلومات دستیاب نہیں ہے۔";
-                currentData.titleEn = dataEn.title;
-                currentData.titleUr = dataUr.title || dataEn.title;
-                
-                // Set initial view (English)
-                updateUI("en");
-
-                if (dataEn.originalimage) {
-                    document.getElementById('res-img').src = dataEn.originalimage.source;
-                    document.getElementById('res-img').style.display = "block";
-                }
+                const videoURL = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(query)}`;
+                document.getElementById('video-box').innerHTML = `<iframe src="${videoURL}" allowfullscreen></iframe>`;
             } catch (e) {
                 document.getElementById('rtitle').innerText = "Error";
-                document.getElementById('rtext').innerText = "Could not find results.";
             }
-        }
-
-        function updateUI(lang) {
-            const body = document.getElementById('rtext');
-            const title = document.getElementById('rtitle');
-            
-            if(lang === "en") {
-                title.innerText = currentData.titleEn;
-                body.innerText = currentData.en;
-                body.style.direction = "ltr";
-                body.style.textAlign = "left";
-            } else {
-                title.innerText = currentData.titleUr;
-                body.innerText = currentData.ur;
-                body.style.direction = "rtl";
-                body.style.textAlign = "right";
-            }
-            currentData.currentLang = lang;
-        }
-
-        function toggleTranslation() {
-            const newLang = currentData.currentLang === "en" ? "ur" : "en";
-            updateUI(newLang);
         }
     </script>
 </body>
