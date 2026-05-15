@@ -28,21 +28,20 @@
         .search-wrapper { 
             width: 100%; max-width: 750px; background: white; padding: 30px; 
             border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); margin-bottom: 40px; 
-            border: 1px solid rgba(0,0,0,0.03);
         }
         .search-bar { 
             width: 100%; padding: 18px 25px; border: 2px solid #f0f0f0; 
             border-radius: 50px; outline: none; font-size: 17px; transition: 0.3s;
             background: #fafafa;
         }
-        .search-bar:focus { border-color: #1a3a5f; background: #fff; box-shadow: 0 0 15px rgba(26,58,95,0.1); }
+        .search-bar:focus { border-color: #1a3a5f; background: #fff; }
         
         .btn-flex { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 20px; }
-        button { padding: 12px 28px; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        button { padding: 12px 28px; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s; font-size: 15px; }
         .btn-main { background: #1a3a5f; color: white; }
         .btn-multi { background: #27ae60; color: white; }
         .btn-reset { background: #e74c3c; color: white; }
-        button:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); opacity: 0.9; }
+        button:hover { transform: translateY(-3px); opacity: 0.9; }
 
         /* --- GRID SYSTEM --- */
         #results-container { 
@@ -54,24 +53,33 @@
         .result-card { 
             background: white; border-radius: 22px; overflow: hidden; 
             box-shadow: 0 12px 30px rgba(0,0,0,0.04); border: 1px solid #eee;
-            display: flex; flex-direction: column; height: 500px;
-            animation: slideUp 0.5s ease-out;
+            display: flex; flex-direction: column; height: 520px; /* Fixed Total Height */
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* --- IMAGE BOX FIX --- */
         .img-frame { 
-            width: 100%; height: 220px; background: #f9f9f9; 
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden; border-bottom: 1px solid #f0f0f0;
+            width: 100%; 
+            height: 220px; /* Fixed frame height */
+            background: #222; /* Dark background for empty spaces */
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            overflow: hidden; 
+            border-bottom: 1px solid #f0f0f0;
         }
-        .img-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .img-frame img { 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain; /* Is se photo kabhi lambi/stretch nahi hogi */
+            display: block;
+        }
         .img-frame i { font-size: 50px; color: #dfe4ea; }
 
-        .content-frame { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; }
-        .content-frame h3 { color: #1a3a5f; font-size: 20px; margin-bottom: 12px; font-weight: 600; }
+        .content-frame { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; overflow: hidden; }
+        .content-frame h3 { color: #1a3a5f; font-size: 20px; margin-bottom: 10px; font-weight: 600; }
         
         .text-scroll { 
-            font-size: 14.5px; color: #555; line-height: 1.7; 
+            font-size: 14.5px; color: #555; line-height: 1.6; 
             overflow-y: auto; flex-grow: 1; padding-right: 8px;
         }
         .text-scroll::-webkit-scrollbar { width: 5px; }
@@ -89,7 +97,6 @@
 
     <div class="search-wrapper">
         <input type="text" id="userInput" class="search-bar" placeholder="Ask usman.gk...">
-        
         <div class="btn-flex">
             <button class="btn-main" onclick="handleSearch(1)"><i class="fa-solid fa-magnifying-glass"></i> Single Result</button>
             <button class="btn-multi" onclick="handleSearch(2)">2 Tabs</button>
@@ -113,7 +120,7 @@
                         <div class="img-frame" id="img-${uniqueId}"><i class="fa-solid fa-spinner fa-spin"></i></div>
                         <div class="content-frame">
                             <h3>${query}</h3>
-                            <div class="text-scroll" id="txt-${uniqueId}">Consulting usman.gk database...</div>
+                            <div class="text-scroll" id="txt-${uniqueId}">Ask usman.gk is finding data...</div>
                         </div>
                     </div>
                 `;
@@ -138,9 +145,9 @@
                     imgDiv.innerHTML = `<i class="fa-solid fa-image-slash"></i>`;
                 }
 
-                textDiv.innerText = data.extract || "No details found for this query.";
+                textDiv.innerText = data.extract || "No details found.";
             } catch (error) {
-                document.getElementById(`txt-${id}`).innerText = "Network error. Please try again.";
+                document.getElementById(`txt-${id}`).innerText = "Network error.";
             }
         }
     </script>
