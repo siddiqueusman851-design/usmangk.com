@@ -3,159 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="2NOWsbs816OSk1GecBJou36Uqp7U_nKZoMvcj-Z29mo" />
-    <title>usman.gk - World Intelligence</title>
+    <title>USMAN.GK - World Intelligence</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+        
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: #f4f7fa; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        body { background: #f4f7f9; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
 
-        /* --- MODERN LOGO DESIGN --- */
-        .logo-section { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            margin-bottom: 30px; 
-            cursor: pointer;
-            transition: 0.4s;
-        }
-        .logo-section:hover { transform: translateY(-5px); }
-        
-        .brand-icon {
-            width: 70px; height: 70px;
-            background: linear-gradient(45deg, #1a3a5f, #2e5a88);
-            border-radius: 18px;
+        /* --- LOGO SECTION --- */
+        .logo-container { margin-bottom: 35px; text-align: center; cursor: pointer; transition: transform 0.3s ease; }
+        .logo-container:hover { transform: scale(1.05); }
+        .logo-box { display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .logo-icon { 
+            width: 60px; height: 60px; background: #1a3a5f; border-radius: 15px; 
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 20px rgba(26, 58, 95, 0.3);
-            margin-bottom: 10px;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(26, 58, 95, 0.2);
         }
-        .brand-icon i { color: #f1c40f; font-size: 30px; z-index: 2; animation: pulse 2s infinite; }
-        .brand-icon::after {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            background: linear-gradient(transparent, rgba(255,255,255,0.2));
-            top: 0; left: 0;
-        }
+        .logo-icon i { color: #f1c40f; font-size: 30px; }
+        .logo-text { font-size: 38px; font-weight: 800; color: #1a3a5f; letter-spacing: -1.5px; }
+        .logo-text span { color: #f1c40f; }
 
-        .logo-text-box h1 { 
-            font-size: 32px; color: #1a3a5f; font-weight: 800; letter-spacing: 1px;
-            text-shadow: 1px 1px 0px #fff;
+        /* --- SEARCH SECTION --- */
+        .search-wrapper { 
+            width: 100%; max-width: 750px; background: white; padding: 30px; 
+            border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); margin-bottom: 40px; 
+            border: 1px solid rgba(0,0,0,0.03);
         }
-        .logo-text-box span { color: #f1c40f; font-weight: 900; }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* --- SEARCH BOX --- */
-        .search-container { 
-            width: 100%; max-width: 750px; background: white; padding: 25px; 
-            border-radius: 25px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); 
-            margin-bottom: 30px; border: 1px solid #eef1f5;
-        }
-        .main-search { 
+        .search-bar { 
             width: 100%; padding: 18px 25px; border: 2px solid #f0f0f0; 
-            border-radius: 50px; outline: none; font-size: 17px; 
-            transition: 0.3s; background: #fafafa;
+            border-radius: 50px; outline: none; font-size: 17px; transition: 0.3s;
+            background: #fafafa;
         }
-        .main-search:focus { border-color: #1a3a5f; background: #fff; box-shadow: 0 0 15px rgba(26,58,95,0.1); }
+        .search-bar:focus { border-color: #1a3a5f; background: #fff; box-shadow: 0 0 15px rgba(26,58,95,0.1); }
         
-        .btn-group { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 15px; }
-        button { padding: 12px 28px; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; transition: 0.3s; font-size: 14px; }
-        .btn-search { background: #1a3a5f; color: white; box-shadow: 0 4px 10px rgba(26,58,95,0.2); }
-        .btn-tab { background: #27ae60; color: white; }
-        .btn-clear { background: #e74c3c; color: white; }
-        button:hover { transform: scale(1.05); filter: brightness(1.1); }
+        .btn-flex { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 20px; }
+        button { padding: 12px 28px; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        .btn-main { background: #1a3a5f; color: white; }
+        .btn-multi { background: #27ae60; color: white; }
+        .btn-reset { background: #e74c3c; color: white; }
+        button:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); opacity: 0.9; }
 
-        /* --- RESULT CARDS --- */
-        #results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
-        .result-card { background: white; padding: 20px; border-radius: 20px; border: 1px solid #eee; box-shadow: 0 8px 20px rgba(0,0,0,0.03); animation: fadeIn 0.5s ease; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- GRID SYSTEM --- */
+        #results-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 25px; width: 100%; max-width: 1250px; 
+        }
 
-        .result-card h3 { color: #1a3a5f; font-size: 19px; margin-bottom: 12px; border-left: 4px solid #f1c40f; padding-left: 10px; }
-        
-        /* WORKING IMAGE BOX */
-        .img-container { 
-            width: 100%; height: 230px; background: #f9f9f9; 
-            border-radius: 15px; margin-bottom: 15px; overflow: hidden; 
+        .result-card { 
+            background: white; border-radius: 22px; overflow: hidden; 
+            box-shadow: 0 12px 30px rgba(0,0,0,0.04); border: 1px solid #eee;
+            display: flex; flex-direction: column; height: 500px;
+            animation: slideUp 0.5s ease-out;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .img-frame { 
+            width: 100%; height: 220px; background: #f9f9f9; 
             display: flex; align-items: center; justify-content: center;
-            border: 1px solid #f0f0f0;
+            overflow: hidden; border-bottom: 1px solid #f0f0f0;
         }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; }
-        .img-container i { font-size: 50px; color: #ddd; }
+        .img-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .img-frame i { font-size: 50px; color: #dfe4ea; }
 
-        .result-card p { font-size: 14px; color: #555; line-height: 1.6; height: 110px; overflow-y: auto; padding-right: 5px; }
+        .content-frame { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; }
+        .content-frame h3 { color: #1a3a5f; font-size: 20px; margin-bottom: 12px; font-weight: 600; }
+        
+        .text-scroll { 
+            font-size: 14.5px; color: #555; line-height: 1.7; 
+            overflow-y: auto; flex-grow: 1; padding-right: 8px;
+        }
+        .text-scroll::-webkit-scrollbar { width: 5px; }
+        .text-scroll::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="logo-section" onclick="window.location.reload()">
-        <div class="brand-icon">
-            <i class="fa-solid fa-brain"></i>
-        </div>
-        <div class="logo-text-box">
-            <h1>USMAN<span>.GK</span></h1>
+    <div class="logo-container" onclick="window.location.reload()">
+        <div class="logo-box">
+            <div class="logo-icon"><i class="fa-solid fa-brain"></i></div>
+            <div class="logo-text">USMAN<span>.GK</span></div>
         </div>
     </div>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" class="main-search" placeholder="Search anything (e.g. Moon, Tiger, Ferrari)...">
-        <div class="btn-group">
-            <button class="btn-search" onclick="multiSearch(1)"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-            <button class="btn-tab" onclick="multiSearch(2)">2 Tabs</button>
-            <button class="btn-tab" onclick="multiSearch(4)">4 Tabs</button>
-            <button class="btn-clear" onclick="document.getElementById('results-grid').innerHTML=''"><i class="fa-solid fa-trash-can"></i> Clear</button>
+    <div class="search-wrapper">
+        <input type="text" id="userInput" class="search-bar" placeholder="Ask usman.gk...">
+        
+        <div class="btn-flex">
+            <button class="btn-main" onclick="handleSearch(1)"><i class="fa-solid fa-magnifying-glass"></i> Single Result</button>
+            <button class="btn-multi" onclick="handleSearch(2)">2 Tabs</button>
+            <button class="btn-multi" onclick="handleSearch(4)">4 Tabs</button>
+            <button class="btn-reset" onclick="document.getElementById('results-container').innerHTML=''"><i class="fa-solid fa-trash-can"></i> Reset</button>
         </div>
     </div>
 
-    <div id="results-grid"></div>
+    <div id="results-container"></div>
 
     <script>
-        async function multiSearch(count) {
-            const query = document.getElementById('searchInput').value.trim();
-            const grid = document.getElementById('results-grid');
+        async function handleSearch(qty) {
+            const query = document.getElementById('userInput').value.trim();
+            const container = document.getElementById('results-container');
             if (!query) return;
 
-            for (let i = 0; i < count; i++) {
-                const cardId = `id-${Date.now()}-${i}`;
-                const card = document.createElement('div');
-                card.className = 'result-card';
-                card.innerHTML = `
-                    <h3>${query}</h3>
-                    <div class="img-container" id="img-box-${cardId}">
-                        <i class="fa-solid fa-circle-notch fa-spin"></i>
+            for (let i = 0; i < qty; i++) {
+                const uniqueId = `item-${Date.now()}-${i}`;
+                const skeleton = `
+                    <div class="result-card">
+                        <div class="img-frame" id="img-${uniqueId}"><i class="fa-solid fa-spinner fa-spin"></i></div>
+                        <div class="content-frame">
+                            <h3>${query}</h3>
+                            <div class="text-scroll" id="txt-${uniqueId}">Consulting usman.gk database...</div>
+                        </div>
                     </div>
-                    <p id="text-${cardId}">Fetching intelligence...</p>
                 `;
-                grid.prepend(card);
-                fetchData(query, cardId);
+                container.insertAdjacentHTML('afterbegin', skeleton);
+                fetchInformation(query, uniqueId);
             }
         }
 
-        async function fetchData(query, cardId) {
+        async function fetchInformation(topic, id) {
             try {
-                // Wikipedia API with Image
-                const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`);
-                const data = await res.json();
+                const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(topic)}`);
+                const data = await response.json();
 
-                const imgBox = document.getElementById(`img-box-${cardId}`);
-                
-                // IMAGE FUNCTION LOGIC
-                if (data.originalimage && data.originalimage.source) {
-                    imgBox.innerHTML = `<img src="${data.originalimage.source}" alt="Result">`;
-                } else if (data.thumbnail && data.thumbnail.source) {
-                    imgBox.innerHTML = `<img src="${data.thumbnail.source}" alt="Result">`;
+                const imgDiv = document.getElementById(`img-${id}`);
+                const textDiv = document.getElementById(`txt-${id}`);
+
+                if (data.originalimage) {
+                    imgDiv.innerHTML = `<img src="${data.originalimage.source}" alt="Result">`;
+                } else if (data.thumbnail) {
+                    imgDiv.innerHTML = `<img src="${data.thumbnail.source}" alt="Result">`;
                 } else {
-                    imgBox.innerHTML = `<i class="fa-solid fa-image-slash"></i>`;
+                    imgDiv.innerHTML = `<i class="fa-solid fa-image-slash"></i>`;
                 }
 
-                document.getElementById(`text-${cardId}`).innerText = data.extract || "No specific details found for this topic.";
-            } catch (e) {
-                document.getElementById(`text-${cardId}`).innerText = "Network error. Try again.";
+                textDiv.innerText = data.extract || "No details found for this query.";
+            } catch (error) {
+                document.getElementById(`txt-${id}`).innerText = "Network error. Please try again.";
             }
         }
     </script>
